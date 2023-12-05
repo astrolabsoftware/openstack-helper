@@ -1,0 +1,11 @@
+La CLI openstack, c'est le bazar. En fait, y'a deux versions qui coexistent : il vaut mieux utiliser la nouvelle, qui essaye de tout réunir dans une seule commande (au lieu d'avoir une CLI par composant). Pour l'installer, le plus simple que j'ai trouvé c'est de faire un virtualenv python et d'y installer python-openstackclient, python-magnumclient, python-neutronclient, python-cinderclient and python-octaviaclient .
+Avec ça, tu as accès à une cli unifié openstack. Ensuite il te faut t'authentifier auprès du cloud. Pour ça, le plus simple, c'est de se connecter par l'interface web, sur le projet que tu veux, et dans le menu déroulant en haut à droite de télécharger le "OpenStack RC file". Et tu sources ce fichier dans ton shell.
+Normalement à ce point, si tu fais un openstack server list par exemple, tu devrais avoir la liste des VM qui tournent dans le projet (dans un format pas lisible et difficilement parsable... mais passons).
+Bon, ensuite avec cette CLI, pour faire une VM, moi je fais :
+openstack server create --image CentOS-Stream-GenericCloud-8-20230501.0.x86_64 --flavor vd.2 --network public-2 --key-name <ta clef> testvm
+Il faut que tu utilises les flavors vd . Les autres sont des flavors réservées à certain·e·s utilisateur·ice·s qui ont mis des ressources propres dans le cloud, donc tu pourras pas les utiliser. Tu peux voir toutes les flavors dispos avec openstack flavor list | grep vd.
+Sur notre projet k8s-rd, le "security group" par défaut (les règles de par-feu d'OpenStack) bloque tout. J'en ai créé un autre qui laisse passer ssh et icmp. Pour que tu puisses accéder à ta machine, il faut lui rajouter ces règles avec openstack server add security group testvm "ssh + icmp".
+Ensuite, on créé le volume.
+openstack volume create --size <taille en GB> testvolume
+Et on l'attache à la VM avec openstack server add volume testvm testvolume.
+Maintenant, tu peux récupérer l'IP de ta machine avec openstack server list  pour t'y connecter en SSH, et le volume devrait apparaître dans lsblk. Ensuite, tu connais, il suffit de lui créer un filesystem, de le monter et de l'ajouter au fstab. (modifié) 
