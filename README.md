@@ -6,6 +6,8 @@ Start an openstack development machine to host fink-broker software stack
 
 https://horizon.ijclab.in2p3.fr/dashboard/auth/login/?next=/dashboard/
 
+Use "statuslab" domain
+
 # Install openstack client
 
 ```bash
