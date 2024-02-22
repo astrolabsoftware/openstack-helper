@@ -8,5 +8,5 @@ USER="fedora"
 SERVER="157.136.249.230"
 
 for dir in "k8s-school" "astrolabsoftware"; do
-    rsync -avzP --exclude-from="$DIR/rsync-exclude.txt" "$HOME/src/$dir" $USER@$SERVER:~/src/
+    rsync -avzP --delete --exclude-from="$DIR/rsync-exclude.txt" "$HOME/src/$dir" $USER@$SERVER:~/src/
 done

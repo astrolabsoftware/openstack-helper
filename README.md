@@ -26,5 +26,7 @@ openstack flavor list | grep vd
 openstack flavor show <flavor-name>
 # Connect to fedora vm
 ssh fedora@<vm-ip>
+# Retrieve kubeconfig
+openstack coe cluster config --dir <cluster-name>
 ```
 
