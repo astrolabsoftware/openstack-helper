@@ -5,7 +5,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 USER="fedora"
-SERVER="157.136.249.230"
+SERVER="ADD_OPENSTACK_IP HERE"
 
 for dir in "k8s-school" "astrolabsoftware"; do
     rsync -avzP --delete --exclude-from="$DIR/rsync-exclude.txt" "$HOME/src/$dir" $USER@$SERVER:~/src/
